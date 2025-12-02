@@ -1,0 +1,87 @@
+{
+  "rules": {
+        "seats": {
+      "$seatId": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+
+        "seatId": {
+          ".validate": "newData.isString()"
+        },
+        "seatNumber": {
+          ".validate": "newData.isNumber() && newData.val() > 0"
+        },
+        "room": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "userId": {
+          ".validate": "newData.isString() && newData.val() == auth.uid"
+        },
+        "reservedSt": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "reservedEd": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "occupiedAt": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "lastSeated": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "abnormalPressure": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "totalTime": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "status": {
+          ".validate": "newData.isString() && 
+            (newData.val() == 'empty' ||
+             newData.val() == 'reserved' ||
+             newData.val() == 'occupied' ||
+             newData.val() == 'object')"
+        }
+      }
+    },
+      "sensors": { // <--- sensors 노드의 시작, 데이터 제대로 가는지 임시로 확인중
+      "$seatId": { // <--- 각 seatId 하위 노드에 대한 규칙
+        // 모든 사용자 (인증 여부와 관계없이)에게 각 seatId의 센서 데이터를 읽기 허용
+        ".read": "true",
+        // 모든 사용자 (인증 여부와 관계없이)에게 각 seatId의 센서 데이터를 쓰기 허용
+        ".write": "true",
+
+        // 이 아래 .validate 규칙들은 쓰기가 허용된 후, 데이터의 유효성을 검사합니다.
+        // 즉, 아무나 쓸 수는 있지만, 쓰는 데이터는 이 형태를 따라야 합니다.
+        // 현재는 'status'와 'pressure' 필드에 대한 검증을 가정했습니다.
+        ".validate": "newData.hasChildren(['status'])", // 최소한 'status' 필드를 포함해야 함
+
+        "status": {
+          ".validate": "newData.isString() && (newData.val() == 'empty' || newData.val() == 'occupied' || newData.val() == 'reserved' || newData.val() == 'object')"
+        }}},
+
+    "system": {
+      
+      ".read": "true",  // 모든 사용자에게 읽기 허용,임시 settings를 system으로 바꿈
+      ".write": "true", // 모든 사용자에게 쓰기 허용    
+      
+      ".validate": "newData.hasChildren(['C_threshold', 'Y_bias_Range', 'T_fixed', 'T_reserve', 'Version'])",
+
+      "C_threshold": {
+        ".validate": "newData.isNumber() && newData.val() > 0"
+      },
+      "Y_bias_Range": {
+        ".validate": "newData.isNumber() && newData.val() >= 0"
+      },
+      "T_fixed": {
+        ".validate": "newData.isNumber() && newData.val() >= 1"
+      },
+      "T_reserve": {
+        ".validate": "newData.isNumber() && newData.val() >= 30"
+      },
+      "Version": {
+        ".validate": "newData.isNumber()"
+      }
+    }
+  }
+}

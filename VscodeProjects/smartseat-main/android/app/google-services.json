@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "558657031819",
+    "firebase_url": "https://dbtest-1c893-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "dbtest-1c893",
+    "storage_bucket": "dbtest-1c893.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558657031819:android:d42be9fe340ec6c7c8ce8e",
+        "android_client_info": {
+          "package_name": "com.smartseat.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_l-jHpz0wbQLxZwLArF2ja4OOJ8W8yNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

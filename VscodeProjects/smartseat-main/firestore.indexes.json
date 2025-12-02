@@ -1,0 +1,24 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "seats",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "room",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seat_number",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "__name__",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    }
+  ],
+  "fieldOverrides": []
+}
